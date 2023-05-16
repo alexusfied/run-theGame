@@ -58,6 +58,7 @@ const purpleBall = new Ball(300, 125, "#4c1d3f", 40, 8, -3);
 const player = {
   posX: canvas.width / 2,
   posY: canvas.height / 2,
+  speed: 6,
   pHeight: 25,
   pWidth: 25,
   // The draw player method draws the avatar of the player, in this case a black rectangle
@@ -67,21 +68,36 @@ const player = {
     ctx.fillStyle = "#020100";
     ctx.fill();
     ctx.closePath();
+    // Check if the players avatar touches any of the balls
+    if (
+      player.currentPosition() === greenBall.currentPosition() ||
+      player.currentPosition() === blueBall.currentPosition() ||
+      player.currentPosition() === purpleBall.currentPosition()
+    ) {
+      alert("GAME OVER");
+      document.location.reload();
+    }
   },
   currentPosition: function () {
     return [this.posX, this.posY];
   },
-  // The play method lets the player move his avatar with the arrow keys
+  // The play method lets the player move his avatar with the arrow keys within the boundaries of the canvas
   play: function () {
     this.drawPlayer();
-    if (upPressed) {
-      this.posY -= 6;
-    } else if (downPressed) {
-      this.posY += 6;
-    } else if (leftPressed) {
-      this.posX -= 6;
-    } else if (rightPressed) {
-      this.posX += 6;
+    if (upPressed && this.posY - this.speed > 0) {
+      this.posY -= this.speed;
+    } else if (
+      downPressed &&
+      this.posY + this.speed < canvas.height - this.pHeight
+    ) {
+      this.posY += this.speed;
+    } else if (leftPressed && this.posX - this.speed > 0) {
+      this.posX -= this.speed;
+    } else if (
+      rightPressed &&
+      this.posX + this.speed < canvas.width - this.pWidth
+    ) {
+      this.posX += this.speed;
     }
   },
 };
@@ -94,15 +110,20 @@ function drawMain() {
   purpleBall.move();
   player.play();
 
-  // Check if the players avatar touches any of the balls
-  if (
-    player.currentPosition() === greenBall.currentPosition() ||
-    player.currentPosition() === blueBall.currentPosition() ||
-    player.currentPosition() === purpleBall.currentPosition()
-  ) {
-    alert("GAME OVER");
-    document.location.reload();
+  // Collision detection doesn't work at the moment --> still under construction
+  function collisionDetection() {
+    const balls = [greenBall, blueBall, purpleBall];
+    for (let i = 0; i < balls.length; i++) {
+      let disX = player.currentPosition()[0] - balls[i].currentPosition[0];
+      let disY = player.currentPosition()[1] - balls[i].currentPosition[1];
+      let distance = Math.sqrt(disX * disX + disY * disY);
+      if (distance < balls[i].radius) {
+        alert("GAME OVER!");
+        document.location.reload();
+      }
+    }
   }
+  collisionDetection();
   requestAnimationFrame(drawMain);
 }
 
