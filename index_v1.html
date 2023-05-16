@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="de-DE">
+  <head>
+    <meta charset="utf-8" />
+    <title>Run for it!</title>
+    <style>
+      * {
+        padding: 0;
+        margin: 0;
+      }
+
+      canvas {
+        background: #eee;
+        position: relative;
+        left: 33%;
+        margin-top: 10%;
+      }
+    </style>
+  </head>
+
+  <body>
+    <canvas id="myCanvas" height="600" width="800"></canvas>
+
+    <script>
+      const canvas = document.getElementById("myCanvas");
+      const ctx = canvas.getContext("2d");
+
+      const greenBall = {
+        posX: 100,
+        posY: 100,
+        color: "#0f9123",
+        radius: 20,
+        moveX: 3,
+        moveY: 10,
+        drawBall: drawBall,
+        moveBall: moveBall,
+      };
+
+      const blueBall = {
+        posX: 400,
+        posY: 500,
+        color: "#181c5e",
+        radius: 30,
+        moveX: 2,
+        moveY: -2,
+        drawBall: drawBall,
+        moveBall: moveBall,
+      };
+
+      const purpleBall = {
+        posX: 300,
+        posY: 125,
+        color: "#4c1d3f",
+        radius: 40,
+        moveX: 10,
+        moveY: -4,
+        drawBall: drawBall,
+        moveBall: moveBall,
+      };
+
+      function drawBall() {
+        ctx.beginPath();
+        ctx.arc(this.posX, this.posY, this.radius, 0, Math.PI * 2);
+        ctx.fillStyle = this.color;
+        ctx.fill();
+        ctx.closePath();
+        this.posX += this.moveX;
+        this.posY += this.moveY;
+      }
+
+      function moveBall() {
+        this.drawBall();
+        if (
+          this.posX + this.moveX > canvas.width - this.radius ||
+          this.posX + this.moveX < this.radius
+        ) {
+          this.moveX = -this.moveX;
+        }
+
+        if (
+          this.posY + this.moveY > canvas.height - this.radius ||
+          this.posY + this.moveY < this.radius
+        ) {
+          this.moveY = -this.moveY;
+        }
+      }
+
+      function drawMain() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        greenBall.moveBall();
+        blueBall.moveBall();
+        purpleBall.moveBall();
+        requestAnimationFrame(drawMain);
+      }
+
+      drawMain();
+    </script>
+  </body>
+</html>

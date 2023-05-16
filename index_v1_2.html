@@ -11,14 +11,15 @@
 
       canvas {
         background: #eee;
-        margin: auto;
-        display: block;
+        position: relative;
+        left: 33%;
+        margin-top: 10%;
       }
     </style>
   </head>
 
   <body>
-    <canvas id="myCanvas" width="800" height="600"></canvas>
+    <canvas id="myCanvas" height="600" width="800"></canvas>
 
     <script>
       // Necessary variables are defined
@@ -48,13 +49,6 @@
           ctx.closePath();
           this.posX += this.moveX;
           this.posY += this.moveY;
-        }
-        // The currentPosition method returns an object of the current position of the ball by providing the x and y coordinates
-        currentPosition() {
-          return {
-            x: this.posX,
-            y: this.posY,
-          };
         }
         // The move method lets the ball move inside of the boundaries of the canvas
         move() {
@@ -86,22 +80,6 @@
         posY: canvas.height / 2,
         pHeight: 25,
         pWidth: 25,
-        topLeft: {
-          x: posX,
-          y: posY,
-        },
-        topRight: {
-          x: posX + pWidth,
-          y: posY,
-        },
-        bottomRight: {
-          x: posX + pWidth,
-          y: posY + pHeight,
-        },
-        bottomLeft: {
-          x: posX,
-          y: posY + pHeight,
-        },
         // The draw player method draws the avatar of the player, in this case a black rectangle
         drawPlayer: function () {
           ctx.beginPath();
@@ -112,31 +90,16 @@
         },
         // The play method lets the player move his avatar with the arrow keys
         play: function () {
-          // Move the player with the arrow keys inside the boundaries of the canvas
           this.drawPlayer();
-          if (upPressed && this.posY - 6 > 0) {
+          if (upPressed) {
             this.posY -= 6;
-          } else if (
-            downPressed &&
-            this.posY + 6 < canvas.height - this.pHeight
-          ) {
+          } else if (downPressed) {
             this.posY += 6;
-          } else if (leftPressed && this.posX - 6 > 0) {
+          } else if (leftPressed) {
             this.posX -= 6;
-          } else if (
-            rightPressed &&
-            this.posX + 6 < canvas.width - this.pWidth
-          ) {
+          } else if (rightPressed) {
             this.posX += 6;
           }
-
-          // Check if the players avatar touches any of the balls -> doesn't work at the moment
-          /*if (
-
-          ) {
-            alert("GAME OVER");
-            document.location.reload();
-          }*/
         },
       };
 
@@ -147,7 +110,6 @@
         blueBall.move();
         purpleBall.move();
         player.play();
-
         requestAnimationFrame(drawMain);
       }
 
