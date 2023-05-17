@@ -68,18 +68,84 @@ const player = {
     ctx.fillStyle = "#020100";
     ctx.fill();
     ctx.closePath();
-    // Check if the players avatar touches any of the balls
-    if (
-      player.currentPosition() === greenBall.currentPosition() ||
-      player.currentPosition() === blueBall.currentPosition() ||
-      player.currentPosition() === purpleBall.currentPosition()
-    ) {
-      alert("GAME OVER");
-      document.location.reload();
-    }
   },
   currentPosition: function () {
     return [this.posX, this.posY];
+  },
+
+  // The collision detection checks whether the player is touching any of the moving balls and stops the game if this should be the case
+  collisionDetection: function () {
+    // Grab the current position of the player. This is an array with the x position at index 0 and y position at index 1
+    const playerUpperLeftVertex = player.currentPosition();
+    // Grab all four vertices of the players avatar and store them as objects in an array
+    let verticesPlayerAv = [
+      // Upper left vertex
+      {
+        x: playerUpperLeftVertex[0],
+        y: playerUpperLeftVertex[1],
+      },
+      // Upper right vertex
+      {
+        x: playerUpperLeftVertex[0] + player.pWidth,
+        y: playerUpperLeftVertex[1],
+      },
+      // Lower right vertex
+      {
+        x: playerUpperLeftVertex[0] + player.pWidth,
+        y: playerUpperLeftVertex[1] + player.pHeight,
+      },
+      // Lower left vertex
+      {
+        x: playerUpperLeftVertex[0],
+        y: playerUpperLeftVertex[1] + player.pHeight,
+      },
+    ];
+
+    // Grab the moving balls and store them in an array
+    const movBalls = [greenBall, purpleBall, blueBall];
+
+    // Helper function to grab the ball which is closest to the players avatar
+    function getClosestBall() {
+      let closestBall = null;
+      let ballMinDistance = 5000;
+      let vertMinDistance = 5000;
+      let closestVert = null;
+      for (let i = 0; i < movBalls.length; i++) {
+        // Check for the vert closest to the current ball
+        for (let j = 0; j < verticesPlayerAv.length; j++) {
+          let distance = Math.sqrt(
+            Math.pow(Math.abs(movBalls[i].posY - verticesPlayerAv[j].y), 2) +
+              Math.pow(Math.abs(movBalls[i].posX - verticesPlayerAv[j].x), 2)
+          );
+
+          if (distance < vertMinDistance) {
+            vertMinDistance = distance;
+            closestVert = verticesPlayerAv[j];
+          }
+        }
+        // Calculate the distance of the closest vert to the current ball
+        let distanceClosestVert = Math.sqrt(
+          Math.pow(Math.abs(movBalls[i].posY - closestVert.y), 2) +
+            Math.pow(Math.abs(movBalls[i].posX - closestVert.x), 2)
+        );
+        // If the distance to the current ball is shorter than the present shortest distance of a ball to the player, reassign the values
+        if (distanceClosestVert < ballMinDistance) {
+          ballMinDistance = distanceClosestVert;
+          closestBall = [movBalls[i], distanceClosestVert];
+        }
+      }
+      return closestBall;
+    }
+
+    // Store the closest ball in a variable
+    const closestBall = getClosestBall();
+
+    /* Check the distance of the closest ball. If the distance of this ball is shorter than its radius, 
+    the ball is touching the players avatar and the game is over*/
+    if (closestBall[1] < closestBall[0].radius) {
+      alert("GAME OVER!");
+      document.location.reload();
+    }
   },
   // The play method lets the player move his avatar with the arrow keys within the boundaries of the canvas
   play: function () {
@@ -109,21 +175,7 @@ function drawMain() {
   blueBall.move();
   purpleBall.move();
   player.play();
-
-  // Collision detection doesn't work at the moment --> still under construction
-  function collisionDetection() {
-    const balls = [greenBall, blueBall, purpleBall];
-    for (let i = 0; i < balls.length; i++) {
-      let disX = player.currentPosition()[0] - balls[i].currentPosition[0];
-      let disY = player.currentPosition()[1] - balls[i].currentPosition[1];
-      let distance = Math.sqrt(disX * disX + disY * disY);
-      if (distance < balls[i].radius) {
-        alert("GAME OVER!");
-        document.location.reload();
-      }
-    }
-  }
-  collisionDetection();
+  player.collisionDetection();
   requestAnimationFrame(drawMain);
 }
 
