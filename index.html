@@ -4,13 +4,29 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Run for it!</title>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Bungee+Spice"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Source+Sans+3"
+    />
     <link rel="stylesheet" type="text/css" href="run_style.css" />
   </head>
 
   <body>
-    <div class="canvas">
+    <main class="mainContainer">
+      <div class="info-bar">
+        <h1>Run!</h1>
+        <p class="instructions">
+          Use the arrow keys (&#8592 &#8593 &#8594 &#8595 ) to move the black rectangle and avoid getting
+          touched by the moving circles
+        </p>
+        <button class="btn-newGame">New Game</button>
+      </div>
       <canvas id="myCanvas" width="800" height="600"></canvas>
-    </div>
+    </main>
     <script src="run.js"></script>
   </body>
 </html>

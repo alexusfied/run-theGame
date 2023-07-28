@@ -1,6 +1,9 @@
 // Necessary variables are defined
 const canvas = document.getElementById("myCanvas");
 const ctx = canvas.getContext("2d");
+const btnNewGame = document.querySelector(".btn-newGame");
+const mainContainer = document.querySelector(".mainContainer");
+
 let upPressed = false;
 let downPressed = false;
 let leftPressed = false;
@@ -143,7 +146,7 @@ const player = {
     /* Check the distance of the closest ball. If the distance of this ball is shorter than its radius, 
     the ball is touching the players avatar and the game is over*/
     if (closestBall[1] < closestBall[0].radius) {
-      alert("GAME OVER!");
+      alert("GAME OVER");
       document.location.reload();
     }
   },
@@ -170,6 +173,7 @@ const player = {
 
 // This is the main method, which calls all the other methods necessary for playing the game
 function drawMain() {
+  btnNewGame.style.opacity = "0";
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   greenBall.move();
   blueBall.move();
@@ -207,5 +211,5 @@ function keyUpHandler(e) {
   }
 }
 
-// The main function is called
-drawMain();
+// The main function is called and the game started, when the New Game-Button is clicked
+btnNewGame.addEventListener("click", drawMain);

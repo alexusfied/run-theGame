@@ -3,13 +3,52 @@
   margin: 0;
 }
 
-.canvas {
+/*----------Main Container-----------*/
+
+.mainContainer {
   display: flex;
   justify-content: center;
   align-items: center;
   width: 100vw;
   height: 100vh;
+  background: linear-gradient(rgb(27, 125, 157), rgb(82, 82, 168));
 }
+
 canvas {
   background: #eee;
+}
+
+/*----------Info Bar-----------*/
+
+.info-bar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 20vw;
+  padding-left: 2vw;
+  padding-top: 7vh;
+  font-family: "Source Sans 3";
+}
+
+h1 {
+  margin-bottom: 3vh;
+  font-family: "Bungee Spice";
+}
+
+.btn-newGame {
+  width: 5vw;
+  height: 4vh;
+  border-radius: 25px;
+  border: none;
+  margin-top: 2vh;
+  opacity: 1;
+  transition: all 1s;
+}
+
+.btn-newGame:hover {
+  border: solid 1px;
+  cursor: pointer;
 }
