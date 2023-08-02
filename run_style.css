@@ -1,6 +1,7 @@
 * {
   padding: 0;
   margin: 0;
+  font-family: "Source Sans 3";
 }
 
 /*----------Main Container-----------*/
@@ -27,24 +28,29 @@ canvas {
   visibility: hidden;
 }
 
-/*----------Info Bar-----------*/
+/*----------Info Bar - General-----------*/
 
 .info-bar {
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 15rem;
+  padding-left: 2vw;
+  padding-top: 7vh;
+}
+
+/*----------Info Bar - Left-----------*/
+
+#info-bar-left {
   position: absolute;
   left: 0;
   top: 0;
-  width: 20vw;
-  padding-left: 2vw;
-  padding-top: 7vh;
-  font-family: "Source Sans 3";
 }
 
 h1 {
   margin-bottom: 3vh;
   font-family: "Bungee Spice";
+  font-size: 3rem;
 }
 
 .btn-newGame {
@@ -53,6 +59,7 @@ h1 {
   border-radius: 25px;
   border: none;
   margin-top: 2vh;
+  margin-bottom: 4vh;
   opacity: 1;
   transition: all 1s;
 }
@@ -63,15 +70,24 @@ h1 {
 }
 
 h2 {
+  font-family: "Bungee Spice";
   font-size: 1.5rem;
   font-weight: normal;
-  margin-top: 10vh;
+  margin-bottom: 2vh;
 }
 
 .highscores-list {
   list-style-type: decimal;
 }
 
+/*----------Info Bar - Right-----------*/
+#info-bar-right {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
 .stopp-watch {
-  margin-top: 40vh;
+  font-family: "Bungee Spice";
+  font-size: 2rem;
 }
