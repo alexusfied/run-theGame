@@ -18,6 +18,15 @@ canvas {
   background: #eee;
 }
 
+.game-over-info {
+  font-family: "Bungee Spice";
+  font-size: 3rem;
+  position: absolute;
+  top: 45vh;
+  left: 40vw;
+  visibility: hidden;
+}
+
 /*----------Info Bar-----------*/
 
 .info-bar {
@@ -51,4 +60,18 @@ h1 {
 .btn-newGame:hover {
   border: solid 1px;
   cursor: pointer;
+}
+
+h2 {
+  font-size: 1.5rem;
+  font-weight: normal;
+  margin-top: 10vh;
+}
+
+.highscores-list {
+  list-style-type: decimal;
+}
+
+.stopp-watch {
+  margin-top: 40vh;
 }

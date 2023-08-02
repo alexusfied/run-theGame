@@ -1,61 +1,31 @@
+import { Ball } from "./balls.js";
+import { StoppWatch } from "./stoppwatch.js";
+import { Highscores } from "./highscores.js";
+
 // Necessary variables are defined
 const canvas = document.getElementById("myCanvas");
 const ctx = canvas.getContext("2d");
 const btnNewGame = document.querySelector(".btn-newGame");
 const mainContainer = document.querySelector(".mainContainer");
+const gameOverInfo = document.querySelector(".game-over-info");
+const timer = document.querySelector(".stopp-watch");
+const highscoreList = document.querySelector(".highscores-list");
 
 let upPressed = false;
 let downPressed = false;
 let leftPressed = false;
 let rightPressed = false;
 
-// The Ball class is declared, which will serve as the blueprint for all the balls that appear in the game
-class Ball {
-  constructor(posX, posY, color, radius, moveX, moveY) {
-    this.posX = posX;
-    this.posY = posY;
-    this.color = color;
-    this.radius = radius;
-    this.moveX = moveX;
-    this.moveY = moveY;
-  }
-  // The drawBall method draws the ball itself on the canvas using the ball properties defined in the constructor method
-  drawBall() {
-    ctx.beginPath();
-    ctx.arc(this.posX, this.posY, this.radius, 0, Math.PI * 2);
-    ctx.fillStyle = this.color;
-    ctx.fill();
-    ctx.closePath();
-    this.posX += this.moveX;
-    this.posY += this.moveY;
-  }
-  // The currentPosition method returns the current position of the ball by providing the x and y coordinates
-  currentPosition() {
-    return [this.posX, this.posY];
-  }
-  // The move method calls drawBall() to draw the ball on the canvas and lets the ball move inside of the boundaries of the canvas
-  move() {
-    this.drawBall();
-    if (
-      this.posX + this.moveX > canvas.width - this.radius ||
-      this.posX + this.moveX < this.radius
-    ) {
-      this.moveX = -this.moveX;
-    }
-
-    if (
-      this.posY + this.moveY > canvas.height - this.radius ||
-      this.posY + this.moveY < this.radius
-    ) {
-      this.moveY = -this.moveY;
-    }
-  }
-}
-
 // Here, the objects from the Ball class are initialized
 const greenBall = new Ball(100, 100, "#0f9123", 20, 3, 6);
 const blueBall = new Ball(400, 500, "#181c5e", 30, 2, -2);
 const purpleBall = new Ball(300, 125, "#4c1d3f", 40, 8, -3);
+
+// An instance of the StoppWatch class is created and the value of the time element set
+const stoppWatch = new StoppWatch(timer, 0, 0, 1);
+
+// An instance of the Highscores class is created
+const highscores = new Highscores(highscoreList);
 
 // The player object represents the avatar of the player
 const player = {
@@ -76,8 +46,13 @@ const player = {
     return [this.posX, this.posY];
   },
 
+  setCurrentPosition: function (posX, posY) {
+    this.posX = posX;
+    this.posY = posY;
+  },
+
   // The collision detection checks whether the player is touching any of the moving balls and stops the game if this should be the case
-  collisionDetection: function () {
+  collisionDetection: function (requestID) {
     // Grab the current position of the player. This is an array with the x position at index 0 and y position at index 1
     const playerUpperLeftVertex = player.currentPosition();
     // Grab all four vertices of the players avatar and store them as objects in an array
@@ -146,8 +121,18 @@ const player = {
     /* Check the distance of the closest ball. If the distance of this ball is shorter than its radius, 
     the ball is touching the players avatar and the game is over*/
     if (closestBall[1] < closestBall[0].radius) {
-      alert("GAME OVER");
-      document.location.reload();
+      cancelAnimationFrame(requestID);
+      btnNewGame.style.opacity = "1";
+      greenBall.setCurrentPosition(100, 100);
+      blueBall.setCurrentPosition(400, 500);
+      purpleBall.setCurrentPosition(300, 125);
+      player.setCurrentPosition(canvas.width / 2, canvas.height / 2);
+      gameOverInfo.style.visibility = "visible";
+      clearInterval(stoppWatch.getIntervalID());
+      highscores.checkScore(stoppWatch.getTime());
+      highscores.writeList();
+      stoppWatch.setTime(0, 0, 0);
+      timer.textContent = "00:00:00";
     }
   },
   // The play method lets the player move his avatar with the arrow keys within the boundaries of the canvas
@@ -173,14 +158,15 @@ const player = {
 
 // This is the main method, which calls all the other methods necessary for playing the game
 function drawMain() {
+  gameOverInfo.style.visibility = "hidden";
   btnNewGame.style.opacity = "0";
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   greenBall.move();
   blueBall.move();
   purpleBall.move();
   player.play();
-  player.collisionDetection();
-  requestAnimationFrame(drawMain);
+  const requestID = requestAnimationFrame(drawMain);
+  player.collisionDetection(requestID);
 }
 
 // Event listeners are added, together with the corresponding functions below, so key events (only arrow keys in this case) are caught
@@ -212,4 +198,7 @@ function keyUpHandler(e) {
 }
 
 // The main function is called and the game started, when the New Game-Button is clicked
-btnNewGame.addEventListener("click", drawMain);
+btnNewGame.addEventListener("click", () => {
+  stoppWatch.start();
+  drawMain();
+});
