@@ -22,7 +22,7 @@ const blueBall = new Ball(400, 500, "#181c5e", 30, 2, -2);
 const purpleBall = new Ball(300, 125, "#4c1d3f", 40, 8, -3);
 
 // An instance of the StoppWatch class is created and the value of the time element set
-const stoppWatch = new StoppWatch(timer, 0, 0, 1);
+const stoppWatch = new StoppWatch(timer, 0, 0, 0);
 
 // An instance of the Highscores class is created
 const highscores = new HighscoreList(highscoreList);
