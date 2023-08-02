@@ -1,6 +1,6 @@
 import { Ball } from "./balls.js";
 import { StoppWatch } from "./stoppwatch.js";
-import { Highscores } from "./highscores.js";
+import { HighscoreList } from "./highscores.js";
 
 // Necessary variables are defined
 const canvas = document.getElementById("myCanvas");
@@ -25,7 +25,7 @@ const purpleBall = new Ball(300, 125, "#4c1d3f", 40, 8, -3);
 const stoppWatch = new StoppWatch(timer, 0, 0, 1);
 
 // An instance of the Highscores class is created
-const highscores = new Highscores(highscoreList);
+const highscores = new HighscoreList(highscoreList);
 
 // The player object represents the avatar of the player
 const player = {
@@ -130,7 +130,7 @@ const player = {
       gameOverInfo.style.visibility = "visible";
       clearInterval(stoppWatch.getIntervalID());
       highscores.checkScore(stoppWatch.getTime());
-      highscores.writeList();
+      highscores.writeScores();
       stoppWatch.setTime(0, 0, 0);
       timer.textContent = "00:00:00";
     }

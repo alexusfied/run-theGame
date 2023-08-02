@@ -34,6 +34,7 @@ export class StoppWatch {
     this.sec = sec;
   }
   getTime() {
-    return [this.hrs, this.min, this.sec];
+    console.log(this.targetElement.textContent);
+    return this.targetElement.textContent;
   }
 }
