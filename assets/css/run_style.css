@@ -93,3 +93,14 @@ h2 {
 .highscores-list {
   list-style-type: decimal;
 }
+
+.highscores-list-wrapper {
+  display: flex;
+  justify-content: center;
+  background-color: rgb(252, 252, 252);
+  border-radius: 25px;
+  opacity: 0.6;
+  width: 13vw;
+  height: 60vh;
+  padding: 1rem;
+}
