@@ -17,9 +17,9 @@ let leftPressed = false;
 let rightPressed = false;
 
 // Here, the objects from the Ball class are initialized
-const greenBall = new Ball(100, 100, "#0f9123", 20, 3, 6);
-const blueBall = new Ball(400, 500, "#181c5e", 30, 2, -2);
-const purpleBall = new Ball(300, 125, "#4c1d3f", 40, 8, -3);
+const greenBall = new Ball(100, 100, "#11fc30", 20, 3, 6);
+const orangeBall = new Ball(400, 500, "#fca90f", 30, 2, -2);
+const purpleBall = new Ball(300, 125, "#fc0f95", 40, 8, -3);
 
 // An instance of the StoppWatch class is created and the value of the time element set
 const stoppWatch = new StoppWatch(timer, 0, 0, 0);
@@ -34,11 +34,11 @@ const player = {
   speed: 6,
   pHeight: 25,
   pWidth: 25,
-  // The draw player method draws the avatar of the player, in this case a black rectangle
+  // The draw player method draws the avatar of the player, in this case a green rectangle
   drawPlayer: function () {
     ctx.beginPath();
     ctx.rect(this.posX, this.posY, this.pHeight, this.pWidth);
-    ctx.fillStyle = "#020100";
+    ctx.fillStyle = "#16fc91";
     ctx.fill();
     ctx.closePath();
   },
@@ -80,7 +80,7 @@ const player = {
     ];
 
     // Grab the moving balls and store them in an array
-    const movBalls = [greenBall, purpleBall, blueBall];
+    const movBalls = [greenBall, purpleBall, orangeBall];
 
     // Helper function to grab the ball which is closest to the players avatar
     function getClosestBall() {
@@ -124,7 +124,7 @@ const player = {
       cancelAnimationFrame(requestID);
       btnNewGame.style.opacity = "1";
       greenBall.setCurrentPosition(100, 100);
-      blueBall.setCurrentPosition(400, 500);
+      orangeBall.setCurrentPosition(400, 500);
       purpleBall.setCurrentPosition(300, 125);
       player.setCurrentPosition(canvas.width / 2, canvas.height / 2);
       gameOverInfo.style.visibility = "visible";
@@ -162,7 +162,7 @@ function drawMain() {
   btnNewGame.style.opacity = "0";
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   greenBall.move();
-  blueBall.move();
+  orangeBall.move();
   purpleBall.move();
   player.play();
   const requestID = requestAnimationFrame(drawMain);
