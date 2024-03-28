@@ -1,27 +1,33 @@
+@font-face {
+  font-family: "FasterOne";
+  src: url(../fonts/FasterOne-Regular-webfont.woff);
+}
+
+@font-face {
+  font-family: "Yukarimobil";
+  src: url(../fonts/yukarimobil-webfont.woff);
+}
+
 * {
   padding: 0;
   margin: 0;
   font-family: "Source Sans 3";
+  color: rgb(51, 246, 184);
 }
 
 /*----------Main Container-----------*/
 
-.mainContainer {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100vw;
-  height: 100vh;
-  background: linear-gradient(rgb(27, 125, 157), rgb(82, 82, 168));
+.bg-black {
+  background-color: black;
 }
 
 canvas {
-  background: #eee;
-  width: 50vw;
+  background: black;
+  border: 2px solid rgb(51, 246, 184);
 }
 
 .game-over-info {
-  font-family: "Bungee Spice";
+  font-family: Yukarimobil;
   font-size: 3rem;
   position: absolute;
   top: 45vh;
@@ -29,40 +35,24 @@ canvas {
   visibility: hidden;
 }
 
-/*----------Info Bar - General-----------*/
-
-.info-bar {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 20vw;
-  padding-left: 2vw;
-  padding-top: 7vh;
-}
-
-/*----------Info Bar - Left-----------*/
-
-#info-bar-left {
-  position: absolute;
-  left: 0;
-  top: 0;
-}
-
 h1 {
-  margin-bottom: 3vh;
-  font-family: "Bungee Spice";
-  font-size: 3rem;
+  font-family: FasterOne;
+  font-size: 4.5rem;
+  padding-bottom: 2rem;
 }
 
 .btn-newGame {
-  width: 10vw;
+  margin-top: 1rem;
+  width: 12vw;
   min-width: 5rem;
-  height: 5vh;
+  height: 8vh;
   border-radius: 25px;
   border: none;
-  margin-top: 2vh;
   opacity: 1;
   transition: all 1s;
+  font-family: Yukarimobil;
+  color: black;
+  background-color: rgb(51, 246, 184);
 }
 
 .btn-newGame:hover {
@@ -71,36 +61,27 @@ h1 {
 }
 
 /*----------Info Bar - Right-----------*/
-#info-bar-right {
-  position: absolute;
-  top: 0;
-  right: 0;
-}
-
 .stopp-watch {
-  font-family: "Bungee Spice";
-  font-size: 2rem;
-  margin-bottom: 6vh;
+  font-family: Yukarimobil;
+  font-size: 3rem;
 }
 
 h2 {
-  font-family: "Bungee Spice";
+  font-family: Yukarimobil;
   font-size: 1.5rem;
   font-weight: normal;
-  margin-bottom: 2vh;
+  padding-top: 2rem;
+  padding-bottom: 1rem;
 }
 
 .highscores-list {
   list-style-type: decimal;
 }
 
-.highscores-list-wrapper {
-  display: flex;
-  justify-content: center;
-  background-color: rgb(252, 252, 252);
-  border-radius: 25px;
-  opacity: 0.6;
-  width: 13vw;
-  height: 60vh;
-  padding: 1rem;
+.highscore {
+  font-family: Yukarimobil;
+}
+
+.bg-white-transparent {
+  background-color: rgba(252, 252, 252, 0.174);
 }
